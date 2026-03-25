@@ -6,6 +6,13 @@ WORKDIR /app
 # Copy requirements first for better caching
 COPY requirements.txt .
 
+# Install build dependencies required for compiling C extensions (e.g. pyaudio)
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    python3-dev \
+    portaudio19-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
