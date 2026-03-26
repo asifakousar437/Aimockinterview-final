@@ -1092,7 +1092,9 @@ function showInstructions() {
     
     if (instructionsElement) {
         console.log("DEBUG: Showing instructions element");
-        instructionsElement.style.display = "block";
+        instructionsElement.style.display = "flex"; // Use flex to maintain centering
+        instructionsElement.style.alignItems = "center";
+        instructionsElement.style.justifyContent = "center";
         instructionsElement.classList.remove("hidden");
     } else {
         console.log("ERROR: instructions element not found!");
