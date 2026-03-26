@@ -669,8 +669,8 @@ async function startInterview() {
     document.getElementById("question").innerHTML = `
         <div style="text-align: center; padding: 40px;">
             <div class="loading-spinner" style="font-size: 32px;">🔄</div>
-            <p style="margin-top: 20px; color: #8b5cf6; font-weight: 600;">Starting Interview...</p>
-            <p style="margin-top: 5px; color: #6b7280; font-size: 14px;">Analyzing your resume and generating first question</p>
+            <p style="margin-top: 15px; color: #8b5cf6; font-weight: 600;">Starting Interview...</p>
+            <p style="margin-top: 5px; color: #6b7280; font-size: 14px;">Setting up your interview environment</p>
         </div>
     `;
 
@@ -708,16 +708,23 @@ async function startInterview() {
     }
 
     currentQuestion = data.question;
-
-    document.getElementById("question").innerHTML =
-        "<b>AI:</b> " + currentQuestion;
+    
+    // Debug: Check if question element exists and log question
+    const questionElement = document.getElementById("question");
+    if (questionElement) {
+        console.log("DEBUG: Question element found, setting content:", currentQuestion);
+        questionElement.innerHTML = "<b>AI:</b> " + currentQuestion;
+    } else {
+        console.log("ERROR: Question element not found!");
+    }
     
     // Display match percentage if available
     if (data.match_percentage) {
         document.getElementById("matchPercentage").textContent = data.match_percentage;
     }
     
-    // Speak the question
+    // Speak the question with error handling
+    console.log("DEBUG: Attempting to speak question:", currentQuestion);
     speak(currentQuestion);
 }
 // ---------------- RECORD AUDIO ----------------
@@ -1067,6 +1074,28 @@ function speak(text) {
     } catch (error) {
         console.log("Speech synthesis error:", error);
         // Fallback: just display the question without audio
+    }
+}
+
+// Function to show instructions page from setup
+function showInstructions() {
+    console.log("DEBUG: showInstructions() called");
+    
+    // Hide setup page and show instructions
+    const setupElement = document.getElementById("setup");
+    const instructionsElement = document.getElementById("instructions");
+    
+    if (setupElement) {
+        console.log("DEBUG: Hiding setup element");
+        setupElement.style.display = "none";
+    }
+    
+    if (instructionsElement) {
+        console.log("DEBUG: Showing instructions element");
+        instructionsElement.style.display = "block";
+        instructionsElement.classList.remove("hidden");
+    } else {
+        console.log("ERROR: instructions element not found!");
     }
 }
 

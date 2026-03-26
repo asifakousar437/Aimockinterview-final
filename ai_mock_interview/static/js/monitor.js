@@ -244,7 +244,16 @@ document.addEventListener("visibilitychange", () => {
     
     if (document.hidden) {
         tabWarnings++;
-
+        
+        // Update violation display elements
+        const multipleFaceElement = document.getElementById("multipleFaceViolations");
+        const noFaceElement = document.getElementById("noFaceViolations");
+        const tabElement = document.getElementById("tabViolations");
+        
+        if (multipleFaceElement) multipleFaceElement.textContent = tabWarnings;
+        if (noFaceElement) noFaceElement.textContent = tabWarnings;
+        if (tabElement) tabElement.textContent = tabWarnings;
+        
         // Shake screen briefly when tab switch is detected.
         try {
             document.body.animate(

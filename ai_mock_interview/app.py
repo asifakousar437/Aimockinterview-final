@@ -13,9 +13,15 @@ def result():
     return render_template("result.html")
 
 if __name__ == "__main__":
-    # Port 5000 may be occupied by macOS services (e.g., AirTunes).
-    # Use PORT env var to override when needed.
     import os
-
-    port = int(os.getenv("PORT", "5001"))
-    app.run(debug=True, host="127.0.0.1", port=port)
+    
+    # Get port from environment variable (Railway sets this)
+    port = int(os.getenv("PORT", "5000"))
+    
+    # For Railway deployment, host should be 0.0.0.0
+    host = os.getenv("HOST", "0.0.0.0")
+    
+    # Disable debug mode in production
+    debug = os.getenv("DEBUG", "False").lower() == "true"
+    
+    app.run(debug=debug, host=host, port=port)
